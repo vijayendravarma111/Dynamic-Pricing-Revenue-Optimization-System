@@ -3,14 +3,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# -------------------------------
 # PAGE CONFIG
-# -------------------------------
 st.set_page_config(page_title="Dynamic Pricing", layout="wide")
 
-# -------------------------------
 # LOAD DATA
-# -------------------------------
 @st.cache_data
 def load_data():
     df = pd.read_csv("final_dynamic_pricing_data.csv")
@@ -19,9 +15,6 @@ def load_data():
 
 df = load_data()
 
-# -------------------------------
-# 🎨 ADVANCED UI CSS
-# -------------------------------
 st.markdown("""
 <style>
 
@@ -78,9 +71,7 @@ h1, h2, h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# -------------------------------
 # SIDEBAR
-# -------------------------------
 st.sidebar.title("Control Panel")
 
 cat_filter = st.sidebar.multiselect(
@@ -103,15 +94,11 @@ df = df[
     (df["Month"].between(month_filter[0], month_filter[1]))
 ]
 
-# -------------------------------
 # HEADER
-# -------------------------------
 st.markdown("# Dynamic Pricing & Revenue Optimization")
 st.write("Data-driven pricing system to maximize revenue.")
 
-# -------------------------------
 # KPI
-# -------------------------------
 total = df["TotalPrice"].sum()
 new = df["NewRevenue"].sum()
 lift = new - total
@@ -124,9 +111,7 @@ c2.markdown(f'<div class="kpi"><h4>Optimized Revenue</h4><h2>{new:,.0f}</h2></di
 c3.markdown(f'<div class="kpi"><h4>Revenue Increase</h4><h2>{lift:,.0f}</h2></div>', unsafe_allow_html=True)
 c4.markdown(f'<div class="kpi"><h4>Avg Price</h4><h2>{avg:.2f}</h2></div>', unsafe_allow_html=True)
 
-# -------------------------------
-# 📊 INSIGHTS SECTION
-# -------------------------------
+# INSIGHTS SECTION
 st.markdown("## Insights")
 
 col1, col2 = st.columns(2)
@@ -156,9 +141,7 @@ with col2:
 )
     st.plotly_chart(fig2, use_container_width=True, key="chart2")
 
-# -------------------------------
-# 📈 TREND
-# -------------------------------
+#  TREND
 st.markdown("## Revenue Trend")
 
 time = df.groupby("Month")["TotalPrice"].sum().reset_index()
@@ -171,9 +154,7 @@ fig3 = px.area(
 
 st.plotly_chart(fig3, use_container_width=True, key="chart3")
 
-# -------------------------------
-# 🥧 SHARE
-# -------------------------------
+#  SHARE
 st.markdown("## Revenue Share")
 
 pie = df.groupby("PriceCategory")["TotalPrice"].sum().reset_index()
@@ -186,9 +167,7 @@ fig4 = px.pie(
 
 st.plotly_chart(fig4, use_container_width=True, key="chart4")
 
-# -------------------------------
-# 🏆 TOP PRODUCTS
-# -------------------------------
+# TOP PRODUCTS
 st.markdown("## Top Products")
 
 top = (
@@ -230,9 +209,7 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True, key="top")
 
-# -------------------------------
-# 📊 DISTRIBUTIONS
-# -------------------------------
+#  DISTRIBUTIONS
 st.markdown("## Distribution Analysis")
 
 col1, col2 = st.columns(2)
@@ -257,9 +234,9 @@ with col2:
 )
     st.plotly_chart(fig, use_container_width=True, key="qty")
 
-# -------------------------------
-# 🔍 SCATTER
-# -------------------------------
+
+#  SCATTER
+
 st.markdown("## Price vs Demand")
 
 sample = df[
@@ -277,9 +254,7 @@ fig = px.scatter(
 )
 st.plotly_chart(fig, use_container_width=True, key="scatter")
 
-# -------------------------------
-# 💡 SIMULATOR
-# -------------------------------
+#  SIMULATOR
 st.markdown("## Pricing Simulator")
 
 price = st.slider("Select Price", 1.0, 50.0, 10.0)
@@ -296,9 +271,7 @@ else:
 
 st.markdown(f'<div class="kpi"><h3>Recommended: {rec:.2f}</h3><p>{msg}</p></div>', unsafe_allow_html=True)
 
-# -------------------------------
-# 🧠 INSIGHTS
-# -------------------------------
+#  INSIGHTS
 st.markdown("## Insights")
 
 st.write("""
@@ -307,9 +280,7 @@ st.write("""
 - High demand supports higher pricing
 """)
 
-# -------------------------------
-# 🚀 SOLUTION
-# -------------------------------
+#  SOLUTION
 st.markdown("## Solution")
 
 st.write("""
@@ -319,8 +290,6 @@ Use dynamic pricing:
 - Optimize continuously
 """)
 
-# -------------------------------
 # FOOTER
-# -------------------------------
 st.markdown("---")
 st.caption("Dynamic Pricing Project")
